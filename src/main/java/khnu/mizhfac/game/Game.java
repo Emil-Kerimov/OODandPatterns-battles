@@ -11,4 +11,7 @@ public class Game {
         }
         return false;
     }
+    public static boolean fight(Army first, Army second){
+        return true;
+    }
 }

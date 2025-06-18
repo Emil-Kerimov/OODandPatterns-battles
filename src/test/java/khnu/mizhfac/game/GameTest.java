@@ -3,6 +3,8 @@ package khnu.mizhfac.game;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static khnu.mizhfac.game.WarriorClasses.KNIGHT;
+import static khnu.mizhfac.game.WarriorClasses.WARRIOR;
 import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
 
@@ -11,8 +13,8 @@ class GameTest {
     @DisplayName("when warrior fights against warrior the first should win")
     void test01() {
         // given
-        Warrior chuck = new Warrior();
-        Warrior bruce = new Warrior();
+        Warrior chuck = WARRIOR.make();
+        Warrior bruce = WARRIOR.make();
 
         // when
         boolean res = fight(chuck,bruce);
@@ -25,8 +27,8 @@ class GameTest {
     @DisplayName("when warrior fights against knight the second should win")
     void test02() {
         // given
-        Warrior chuck = new Warrior();
-        Warrior bruce = new Knight();
+        Warrior chuck = WARRIOR.make();
+        Warrior bruce = KNIGHT.make();
 
         // when
         boolean res = fight(chuck,bruce);
@@ -39,8 +41,8 @@ class GameTest {
     @DisplayName("when warrior fights against warrior the first should stay alive")
     void test03() {
         // given
-        Warrior bob = new Warrior();
-        Warrior mars = new Warrior();
+        Warrior bob = WARRIOR.make();
+        Warrior mars = WARRIOR.make();
 
         // when
         fight(bob,mars);
@@ -52,8 +54,8 @@ class GameTest {
     @DisplayName("when knight fights against warrior the first should win ")
     void test04() {
         // given
-        Warrior bob = new Knight();
-        Warrior mars = new Warrior();
+        Warrior bob = KNIGHT.make();
+        Warrior mars = WARRIOR.make();
 
         // when
         boolean res = fight(bob,mars);
@@ -65,8 +67,8 @@ class GameTest {
     @DisplayName("when knight fights against warrior the first should stay alive")
     void test05() {
         // given
-        Warrior bob = new Knight();
-        Warrior mars = new Warrior();
+        Warrior bob = KNIGHT.make();
+        Warrior mars = WARRIOR.make();
 
         // when
         fight(bob,mars);
@@ -78,8 +80,8 @@ class GameTest {
     @DisplayName("when warrior fights against warrior the second shouldn't stay alive")
     void test06() {
         // given
-        Warrior bob = new Warrior();
-        Warrior mars = new Warrior();
+        Warrior bob = WARRIOR.make();
+        Warrior mars = WARRIOR.make();
 
         // when
         fight(bob,mars);
@@ -92,8 +94,8 @@ class GameTest {
     @DisplayName("when warrior fights against knight the second should stay alive")
     void test07() {
         // given
-        Warrior bob = new Warrior();
-        Warrior mars = new Knight();
+        Warrior bob = WARRIOR.make();
+        Warrior mars = KNIGHT.make();
 
         // when
         fight(bob,mars);
@@ -106,9 +108,9 @@ class GameTest {
     @DisplayName("when warrior fights against knight the second should stay alive and then unit 3 should win against knight")
     void test08() {
         // given
-        Warrior bob = new Warrior();
-        Warrior mars = new Knight();
-        Warrior unit3 = new Warrior();
+        Warrior bob = WARRIOR.make();
+        Warrior mars = KNIGHT.make();
+        Warrior unit3 = WARRIOR.make();
 
         // when
         fight(bob,mars);
