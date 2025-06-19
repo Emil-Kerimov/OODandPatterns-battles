@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static khnu.mizhfac.game.WarriorClasses.KNIGHT;
 import static khnu.mizhfac.game.WarriorClasses.WARRIOR;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BattleTest {
 
@@ -34,5 +35,19 @@ public class BattleTest {
         var res = Game.fight(army1,army2);
 
         assertFalse(res);
+    }
+
+    @Test
+    @DisplayName("1. Battle: 20 Warriors +5Knights not > 30W")
+    void battle03(){
+        var army1 = new Army()
+                .addUnits(WARRIOR, 20)
+                .addUnits(KNIGHT, 5);
+        var army2 = new Army()
+                .addUnits(WARRIOR, 30);
+
+        var res = Game.fight(army2,army1);
+
+        assertTrue(res);
     }
 }

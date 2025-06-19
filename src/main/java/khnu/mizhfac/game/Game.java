@@ -12,6 +12,13 @@ public class Game {
         return false;
     }
     public static boolean fight(Army first, Army second){
-        return true;
+        // YAGNI -- you aren't gonna need it
+        var it1 = first.iterator();
+        var it2 = second.iterator();
+
+        while (it1.hasNext() && it2.hasNext()) {
+            fight(it1.next(),it2.next());
+        }
+        return it1.hasNext();
     }
 }

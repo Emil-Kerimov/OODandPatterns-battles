@@ -2,11 +2,17 @@ package khnu.mizhfac.game;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static khnu.mizhfac.game.WarriorClasses.KNIGHT;
 import static khnu.mizhfac.game.WarriorClasses.WARRIOR;
 import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class GameTest {
     @Test
@@ -49,6 +55,32 @@ class GameTest {
 
         // then
         assertTrue(bob.isAlive());
+    }
+    @ParameterizedTest
+    @MethodSource("warriorsPairs")
+    @DisplayName("first warrior should win")
+    void fightTestFirstWin(Warrior first, Warrior second) {
+        assertTrue(fight(first,second));
+    }
+
+    static Stream<Arguments> warriorsPairs(){
+        return Stream.of(
+                arguments(WARRIOR.make(), WARRIOR.make()),
+                arguments(KNIGHT.make(), WARRIOR.make()),
+                arguments(KNIGHT.make(), KNIGHT.make())
+        );
+    }
+    @ParameterizedTest
+    @MethodSource("warriorsPairsSecondWin")
+    @DisplayName("first warrior should win")
+    void fightTestSecondWin(Warrior first, Warrior second) {
+        assertFalse(fight(first,second));
+    }
+
+    static Stream<Arguments> warriorsPairsSecondWin(){
+        return Stream.of(
+                arguments(WARRIOR.make(), KNIGHT.make())
+        );
     }
     @Test
     @DisplayName("when knight fights against warrior the first should win ")
