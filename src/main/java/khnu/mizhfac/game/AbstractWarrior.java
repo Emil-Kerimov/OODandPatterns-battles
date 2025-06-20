@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractWarrior implements Warrior{
     private int health;
+    private int initialHealth;
 
     public AbstractWarrior(int health) {
         this.health = health;
+        this.initialHealth = health;
     }
 
     @Override
@@ -29,12 +31,13 @@ public abstract class AbstractWarrior implements Warrior{
         setHealth(getHealth() - damage);
     }
 
+
     int getHealth() {
         return health;
     }
     public abstract int getAttack();
     protected void setHealth(int health) {
-        this.health = health;
+        this.health = Math.min(initialHealth,health);
     }
 
     @Override

@@ -7,9 +7,14 @@ public class Main {
     public static void main(String[] args) {
         log.trace("log trace");
         log.debug("log debug");
-        log.info("log info");
+        log.info(formMessage());
         log.warn("log warn");
         log.error("log error");
-
+        log.atInfo()
+                .log(formMessage());
+    }
+    static String formMessage(){
+        log.warn("formMessage executed");
+        return "The message";
     }
 }

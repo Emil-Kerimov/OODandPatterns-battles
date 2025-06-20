@@ -1,12 +1,13 @@
 package khnu.mizhfac.game;
 
 public enum WarriorClasses {
-    WARRIOR, KNIGHT, DEFENDER;
+    WARRIOR, KNIGHT, DEFENDER, VAMPIRE;
     public static Warrior factory(WarriorClasses warriorClasses){
         return switch (warriorClasses){
             case WARRIOR ->  new WarriorImpl();
             case KNIGHT ->  new KnightImpl();
             case DEFENDER -> new DefenderImpl();
+            case VAMPIRE -> new VampireImpl();
         };
     }
     public Warrior make(){

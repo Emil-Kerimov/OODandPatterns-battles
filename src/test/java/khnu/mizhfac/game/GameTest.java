@@ -9,9 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static khnu.mizhfac.game.WarriorClasses.KNIGHT;
-import static khnu.mizhfac.game.WarriorClasses.WARRIOR;
-import static khnu.mizhfac.game.WarriorClasses.DEFENDER;
+import static khnu.mizhfac.game.WarriorClasses.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -169,6 +167,7 @@ class GameTest {
 
     @Test
     void WarriorVsDefender() {
+        log.info("Executing test WarriorVsDefender");
         var warrior = WARRIOR.make();
         var defender = DEFENDER.make();
 
@@ -178,6 +177,21 @@ class GameTest {
                 () -> assertFalse(res),
                 () -> assertEquals(-1, ((AbstractWarrior) warrior).getHealth()),
                 () -> assertEquals(9, ((AbstractWarrior) defender).getHealth())
+        );
+    }
+
+    @Test
+    void DefenderVsVampire() {
+        log.info("Executing test DefenderVsVampire");
+        var defender = DEFENDER.make();
+        var vampire = VAMPIRE.make();
+
+        var res = fight(defender,vampire);
+
+        assertAll(
+                () -> assertTrue(res),
+                () -> assertEquals(22, ((AbstractWarrior) defender).getHealth()),
+                () -> assertEquals(-1, ((AbstractWarrior) vampire).getHealth())
         );
     }
 

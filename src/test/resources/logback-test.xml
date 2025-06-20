@@ -11,6 +11,9 @@
         </encoder>
     </appender>
 
+    <logger name="khnu.mizhfac.game.GameTest" level="info" />
+
+
     <root level="off">
         <appender-ref ref="STDOUT"/>
     </root>
