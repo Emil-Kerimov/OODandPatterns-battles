@@ -19,10 +19,14 @@ public abstract class AbstractWarrior implements Warrior{
     public void hit(Warrior second) {
         log.info("Warrior {} hits {}", this, second);
         if(second instanceof  AbstractWarrior awSecond){
-            awSecond.setHealth(awSecond.getHealth() - getAttack());
+            awSecond.acceptDamage(getAttack());
         } else {
             throw new IllegalArgumentException("unsupported type");
         }
+    }
+
+    protected void  acceptDamage(int damage){
+        setHealth(getHealth() - damage);
     }
 
     int getHealth() {
@@ -33,4 +37,14 @@ public abstract class AbstractWarrior implements Warrior{
         this.health = health;
     }
 
+    @Override
+    public String toString() {
+        String name =getClass().getSimpleName();
+        name = name.replaceAll("Impl", "");
+        name = name.toUpperCase();
+        return  name + "{" +
+                "h=" + health +
+                ", a=" + getAttack() +
+                '}';
+    }
 }

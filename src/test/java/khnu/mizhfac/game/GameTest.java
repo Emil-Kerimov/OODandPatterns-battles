@@ -1,5 +1,6 @@
 package khnu.mizhfac.game;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,13 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@Slf4j
 class GameTest {
     @Test
     @DisplayName("when warrior fights against warrior the first should win")
     void test01() {
+        log.info("test 01 is running");
         // given
         Warrior chuck = WARRIOR.make();
         Warrior bruce = WARRIOR.make();
+        log.debug("chuck = {}", chuck);
+        log.debug("bruce = {}", bruce);
 
         // when
         boolean res = fight(chuck,bruce);
