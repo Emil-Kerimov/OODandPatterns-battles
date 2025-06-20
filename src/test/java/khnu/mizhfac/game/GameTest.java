@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import static khnu.mizhfac.game.WarriorClasses.KNIGHT;
 import static khnu.mizhfac.game.WarriorClasses.WARRIOR;
+import static khnu.mizhfac.game.WarriorClasses.DEFENDER;
 import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -150,5 +151,67 @@ class GameTest {
 
         // then
         assertFalse(res);
+    }
+    static class Rookie extends AbstractWarrior{
+        public Rookie(){
+            super(50);
+        }
+        @Override
+        public int getAttack() {
+            return 1;
+        }
+    }
+
+    @Test
+    void WarriorVsDefender() {
+        var warrior = WARRIOR.make();
+        var defender = DEFENDER.make();
+
+        var res = fight(warrior,defender);
+
+        assertAll(
+                () -> assertFalse(res),
+                () -> assertEquals(-1, ((AbstractWarrior) warrior).getHealth()),
+                () -> assertEquals(9, ((AbstractWarrior) defender).getHealth())
+        );
+    }
+
+    @Test
+    void defenderSmokeTest() {
+        var chuck = WARRIOR.make();
+        var bruce = WARRIOR.make();
+        var carl = KNIGHT.make();
+        var dave = WARRIOR.make();
+        var mark = WARRIOR.make();
+        var bob = DEFENDER.make();
+        var mike = KNIGHT.make();
+        var rog = WARRIOR.make();
+        var lancelot = DEFENDER.make();
+
+        assertTrue(fight(chuck, bruce));
+        assertFalse(fight(dave, carl));
+        assertTrue(chuck.isAlive());
+        assertFalse(bruce.isAlive());
+        assertTrue(carl.isAlive());
+        assertFalse(dave.isAlive());
+        assertFalse(fight(carl, mark));
+        assertFalse(carl.isAlive());
+        assertFalse(fight(bob, mike));
+        assertTrue(fight(lancelot, rog));
+
+        var my_army = new Army().addUnits(DEFENDER, 1);
+
+        var enemy_army = new Army()
+                .addUnits(WARRIOR, 2);
+
+        var army_3 = new Army()
+                .addUnits(WARRIOR, 1)
+                .addUnits(DEFENDER, 1);
+
+        var army_4 = new Army().addUnits(WARRIOR, 2);
+
+        assertFalse(fight(my_army, enemy_army));
+        assertTrue(fight(army_3, army_4));
+
     }
 }

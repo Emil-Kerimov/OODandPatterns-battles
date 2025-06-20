@@ -1,5 +1,8 @@
 package khnu.mizhfac.game;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class AbstractWarrior implements Warrior{
     private int health;
 
@@ -14,6 +17,7 @@ public abstract class AbstractWarrior implements Warrior{
 
     @Override
     public void hit(Warrior second) {
+        log.info("Warrior {} hits {}", this, second);
         if(second instanceof  AbstractWarrior awSecond){
             awSecond.setHealth(awSecond.getHealth() - getAttack());
         } else {
@@ -21,7 +25,7 @@ public abstract class AbstractWarrior implements Warrior{
         }
     }
 
-    public int getHealth() {
+    int getHealth() {
         return health;
     }
     public abstract int getAttack();
