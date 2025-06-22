@@ -1,6 +1,8 @@
 package khnu.mizhfac.game;
 
-public class VampireImpl extends AbstractWarrior {
+public class VampireImpl
+        extends AbstractWarrior
+        implements CanHitAndReportMixin{
     static final int ATTACK = 4;
     static final int INITIAL_HEALTH = 40;
     static final int VAMPIRISM = 50;
@@ -18,14 +20,10 @@ public class VampireImpl extends AbstractWarrior {
     }
 
     @Override
-    public void hit(Warrior second) {
-        if(second instanceof AbstractWarrior awSecond){
-            var healthBefore = awSecond.getHealth();
-            super.hit(second);
-            var healthAfter = awSecond.getHealth();
-            var damageDealt = healthBefore - healthAfter;
+    public void hit(CanAcceptDamage opponent) {
+            var damageDealt = hitAndReportDealtDamage(opponent);
             var healing = damageDealt * getVampirism() / 100;
             setHealth(getHealth() + healing);
-        }
     }
+
 }

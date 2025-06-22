@@ -17,7 +17,7 @@ public class DefenderImpl extends AbstractWarrior implements HasDefence {
         return DEFENCE;
     }
     @Override
-    protected void acceptDamage(int damage) {
+    public void acceptDamage(int damage) {
         int reducedDamage = Math.max(0,damage - getDefence());
         super.acceptDamage(reducedDamage);
     }

@@ -1,13 +1,20 @@
 package khnu.mizhfac.game;
 
-import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class Army implements Iterable<Warrior> {
-    private Queue<Warrior> troops = new ArrayDeque<>();
+    private static  int idCounter = 0;
+    private int id = ++idCounter;
+    private Deque<WarriorInArmy> troops = new ArrayDeque<>();
+    private class WarriorInArmyImpl implements WarriorInArmy{
+        Warrior warrior;
+
+        public WarriorInArmyImpl(Warrior warrior) {
+            this.warrior = warrior;
+        }
+        // TODO
+    }
     public Army addUnits(WarriorClasses warriorClasses, int quantity) {
         return addUnits(warriorClasses::make, quantity);
     }
@@ -15,7 +22,11 @@ public class Army implements Iterable<Warrior> {
     public Army addUnits(Supplier<Warrior> warriorFactory, int quantity) {
         //some logic
         for (int j = 0; j < quantity; j++){
-            troops.add(warriorFactory.get());
+            Warrior warrior = warriorFactory.get();
+            WarriorInArmy warriorInArmy = new WarriorInArmyImpl(warrior);
+            //TODO; binding
+            troops.peekLast();
+            troops.add(warriorInArmy);
         }
         return this;
     }
@@ -38,5 +49,12 @@ public class Army implements Iterable<Warrior> {
             if(!hasNext()) throw  new NoSuchElementException();
             return troops.peek();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Army#" + id +
+                "{" + troops +
+                '}';
     }
 }

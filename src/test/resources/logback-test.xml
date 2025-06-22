@@ -12,9 +12,10 @@
     </appender>
 
     <logger name="khnu.mizhfac.game.GameTest" level="info" />
+    <logger name="khnu.mizhfac.game.CanHit" level="off" />
 
 
-    <root level="off">
+    <root level="all">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
