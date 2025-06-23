@@ -233,4 +233,64 @@ class GameTest {
         assertTrue(fight(army_3, army_4));
 
     }
+    @Test
+    void lancerSmokeTest() {
+        var chuck = WARRIOR.make();
+        var bruce = WARRIOR.make();
+        var carl = KNIGHT.make();
+        var dave = WARRIOR.make();
+        var mark = WARRIOR.make();
+        var bob = DEFENDER.make();
+        var mike = KNIGHT.make();
+        var rog = WARRIOR.make();
+        var lancelot = DEFENDER.make();
+        var eric = VAMPIRE.make();
+        var adam = VAMPIRE.make();
+        var richard = DEFENDER.make();
+        var ogre = WARRIOR.make();
+        var freelancer = LANCER.make();
+        var vampire = VAMPIRE.make();
+
+        assertTrue(fight(chuck, bruce));
+        assertFalse(fight(dave, carl));
+        assertTrue(chuck.isAlive());
+        assertFalse(bruce.isAlive());
+        assertTrue(carl.isAlive());
+        assertFalse(dave.isAlive());
+        assertFalse(fight(carl, mark));
+        assertFalse(carl.isAlive());
+        assertFalse(fight(bob, mike));
+        assertTrue(fight(lancelot, rog));
+        assertFalse(fight(eric, richard));
+        assertTrue(fight(ogre, adam));
+        assertTrue(fight(freelancer, vampire));
+        assertTrue(freelancer.isAlive());
+
+        var my_army = new Army()
+                .addUnits(DEFENDER, 2)
+                .addUnits(VAMPIRE, 2)
+                .addUnits(LANCER, 4)
+                .addUnits(WARRIOR, 1);
+
+        var enemy_army = new Army()
+                .addUnits(WARRIOR, 2)
+                .addUnits(LANCER, 2)
+                .addUnits(DEFENDER, 2)
+                .addUnits(VAMPIRE, 3);
+
+        var army_3 = new Army()
+                .addUnits(WARRIOR, 1)
+                .addUnits(LANCER, 1)
+                .addUnits(DEFENDER, 2);
+
+        var army_4 = new Army()
+                .addUnits(VAMPIRE, 3)
+                .addUnits(WARRIOR, 1)
+                .addUnits(LANCER, 2);
+
+        assertTrue(fight(my_army, enemy_army));
+        assertFalse(fight(army_3, army_4));
+
+    }
+
 }

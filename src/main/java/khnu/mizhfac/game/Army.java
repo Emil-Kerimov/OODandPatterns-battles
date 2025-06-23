@@ -6,27 +6,66 @@ import java.util.function.Supplier;
 public class Army implements Iterable<Warrior> {
     private static  int idCounter = 0;
     private int id = ++idCounter;
-    private Deque<WarriorInArmy> troops = new ArrayDeque<>();
+    private Deque<WarriorInArmyImpl> troops = new ArrayDeque<>();
     private class WarriorInArmyImpl implements WarriorInArmy{
-        Warrior warrior;
+        private final Warrior warrior;
+        private WarriorInArmy warriorBehind;
 
         public WarriorInArmyImpl(Warrior warrior) {
-            this.warrior = warrior;
+            this.warrior = Objects.requireNonNull(warrior);
         }
-        // TODO
+
+        private void setWarriorBehind(WarriorInArmy warriorBehind) {
+            this.warriorBehind = Objects.requireNonNull(warriorBehind);;
+        }
+
+        @Override
+        public Optional<WarriorInArmy> getWarriorBehind() {
+            return Optional.ofNullable(warriorBehind);
+        }
+
+        @Override
+        public void acceptDamage(int damage) {
+            warrior.acceptDamage(damage);
+        }
+
+        @Override
+        public void hit(CanAcceptDamage opponent) {
+            warrior.hit(opponent);
+        }
+
+        @Override
+        public int getAttack() {
+            return warrior.getAttack();
+        }
+
+        @Override
+        public int getHealth() {
+            return warrior.getHealth();
+        }
+
+        @Override
+        public boolean isAlive() {
+            return warrior.isAlive();
+        }
+
+        @Override
+        public String toString() {
+            return warrior.toString(); 
+        }
     }
     public Army addUnits(WarriorClasses warriorClasses, int quantity) {
         return addUnits(warriorClasses::make, quantity);
     }
 
     public Army addUnits(Supplier<Warrior> warriorFactory, int quantity) {
-        //some logic
         for (int j = 0; j < quantity; j++){
-            Warrior warrior = warriorFactory.get();
-            WarriorInArmy warriorInArmy = new WarriorInArmyImpl(warrior);
-            //TODO; binding
-            troops.peekLast();
-            troops.add(warriorInArmy);
+            Warrior novice = warriorFactory.get();
+            var noviceInArmy = new WarriorInArmyImpl(novice);
+
+            Optional.ofNullable(troops.peekLast())
+                            .ifPresent(w -> w.setWarriorBehind(noviceInArmy));
+            troops.add(noviceInArmy);
         }
         return this;
     }
