@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 public class Army implements Iterable<Warrior> {
     private static  int idCounter = 0;
     private int id = ++idCounter;
+
     private Deque<WarriorInArmyImpl> troops = new ArrayDeque<>();
     private class WarriorInArmyImpl implements WarriorInArmy{
         private final Warrior warrior;
@@ -28,10 +29,24 @@ public class Army implements Iterable<Warrior> {
         public void acceptDamage(int damage) {
             warrior.acceptDamage(damage);
         }
+        void passCommand(Command command, WarriorInArmy passer){
+            if(passer != this){
+                if(command instanceof ChampionDealsHit &&
+                        warrior instanceof CanHeal healer){
+                    healer.heal(passer);
+                }
+            }
+            getWarriorBehind().ifPresent(
+                    w -> ((WarriorInArmyImpl) w).passCommand(
+                            ChampionDealsHit.INSTANCE, this
+                    )
+            );
+        }
 
         @Override
         public void hit(CanAcceptDamage opponent) {
             warrior.hit(opponent);
+            passCommand(ChampionDealsHit.INSTANCE, this);
         }
 
         @Override
@@ -51,7 +66,7 @@ public class Army implements Iterable<Warrior> {
 
         @Override
         public String toString() {
-            return warrior.toString(); 
+            return warrior.toString();
         }
     }
     public Army addUnits(WarriorClasses warriorClasses, int quantity) {
@@ -95,5 +110,11 @@ public class Army implements Iterable<Warrior> {
         return "Army#" + id +
                 "{" + troops +
                 '}';
+    }
+    interface Command {
+    }
+
+    enum ChampionDealsHit implements Command {
+        INSTANCE;
     }
 }
