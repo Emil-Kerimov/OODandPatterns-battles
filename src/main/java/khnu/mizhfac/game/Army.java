@@ -29,6 +29,9 @@ public class Army implements Iterable<Warrior> {
         public void acceptDamage(int damage) {
             warrior.acceptDamage(damage);
         }
+        Warrior unwrap(){
+            return warrior;
+        }
         void passCommand(Command command, WarriorInArmy passer){
             if(passer != this){
                 if(command instanceof ChampionDealsHit &&
@@ -87,7 +90,16 @@ public class Army implements Iterable<Warrior> {
 
     @Override
     public Iterator<Warrior> iterator() {
+        return troops.stream()
+                .filter(Warrior::isAlive)
+                .map(WarriorInArmyImpl::unwrap)
+                .iterator();
+    }
+    public Iterator<Warrior> firstAliveIterator() {
         return new FirstAliveIterator();
+    }
+    public  boolean isEmpty(){
+        return new FirstAliveIterator().hasNext();
     }
     private class FirstAliveIterator implements  Iterator<Warrior>{
         @Override

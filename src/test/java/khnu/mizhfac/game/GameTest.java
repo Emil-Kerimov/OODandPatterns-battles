@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
+import static khnu.mizhfac.game.Game.straightFight;
 import static khnu.mizhfac.game.WarriorClasses.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static khnu.mizhfac.game.Game.fight;
@@ -290,6 +291,31 @@ class GameTest {
 
         assertTrue(fight(my_army, enemy_army));
         assertFalse(fight(army_3, army_4));
+
+    }
+
+    @Test
+    @DisplayName("fight 04")
+    void fight04() {
+
+        Army army1 = new Army()
+                .addUnits(LANCER, 7)
+                .addUnits(VAMPIRE, 3)
+                .addUnits(HEALER, 1)
+                .addUnits(WARRIOR, 4)
+                .addUnits(HEALER, 1)
+                .addUnits(DEFENDER, 2);//18
+
+        Army army2 = new Army();
+        army2.addUnits(WARRIOR, 4);
+        army2.addUnits(DEFENDER, 4);
+        army2.addUnits(HEALER, 1);
+        army2.addUnits(VAMPIRE, 6);
+        army2.addUnits(LANCER, 4);//19
+
+        var res = straightFight(army1, army2);
+
+        assertFalse(res);
 
     }
 
