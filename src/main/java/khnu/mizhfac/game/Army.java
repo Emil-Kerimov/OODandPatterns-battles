@@ -99,7 +99,7 @@ public class Army implements Iterable<Warrior> {
         return new FirstAliveIterator();
     }
     public  boolean isEmpty(){
-        return new FirstAliveIterator().hasNext();
+        return !new FirstAliveIterator().hasNext();
     }
     private class FirstAliveIterator implements  Iterator<Warrior>{
         @Override
